@@ -1,0 +1,27 @@
+trigger:
+- dev
+
+pool:
+  name: Default
+
+steps:
+
+- script: echo "Starting React Build..."
+  displayName: 'Start'
+
+- script: |
+    node -v
+    npm -v
+  displayName: 'Check Node'
+
+- script: npm install
+  displayName: 'Install Dependencies'
+
+- script: npm run build
+  displayName: 'Build React App'
+
+# 🚀 DEPLOY STEP
+- script: |
+    sudo rm -rf /var/www/html/*
+    sudo cp -r build/* /var/www/html/
+  displayName: 'Deploy to Server'
